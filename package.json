@@ -4,6 +4,8 @@
   "description": "Viber test job",
   "main": "webpack.config.js",
   "scripts": {
+    "pro": "./node_modules/.bin/webpack -p && cp index.html dist && ./node_modules/.bin/serve ./dist",
+    "dev": "./node_modules/.bin/webpack-dev-server --progress --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -19,6 +21,7 @@
     "jade": "^1.11.0",
     "jade-loader": "^0.7.1",
     "ng-annotate-webpack-plugin": "^0.1.2",
+    "serve": "^1.4.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.2",
