@@ -4,38 +4,28 @@ module.exports = (app) ->
     $rootScope.$state = $state
     $rootScope.AuthService = AuthService
 
-    # check Authorization Per Page
-
-    checkAuthorizationPerPage = (pageId) ->
-      pageId in AuthService.pages or
-        pageId in ["NoAuth", "Start", "RedAlert", "Wait"]
-
-
     $rootScope.$on '$stateChangeStart', (event, toPage) ->
+      console.log "$stateChangeStart", toPage
 
-      # If authentication is finished - sync check
+      return if toPage.name in ["noauth", "home", "alert", "wait"]
 
-      if AuthService.loaded
+      # Check if auth was called and call it if not
 
-        if not checkAuthorizationPerPage toPage.name
+      if not AuthService.promise?
 
-          # Intercept and redirect
+        do event.preventDefault
+        $state.go "wait"
 
-          do event.preventDefault
-          $state.go "NoAuth", {}, location: no
+        AuthService.auth().then ->
+          if toPage.name in AuthService.pages
+            $state.go toPage.name
+          else
+            $state.go "noauth"
+        , ->
+          $state.go "alert"
 
       else
 
-        # Wait for authorization
-
-        AuthService.auth.then ->
-          if checkAuthorizationPerPage(toPage.name) is true
-            $state.go toPage.name
-          else
-            $state.go "NoAuth", {}, location: no
-
-        # Activate waiting state meanwhile
-
-
-        do event.preventDefault
-        $state.go "Wait", {}, {location: no, notify: false, reload:true}
+        if toPage.name not in AuthService.pages
+          do event.preventDefault
+          $state.go "noauth"

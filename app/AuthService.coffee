@@ -16,6 +16,10 @@ module.exports = (app) ->
     url = "https://www.filltext.com/?callback=JSON_CALLBACK" +
           "&rows=5&authPage={randomNumber}"
 
-    @auth = $http.jsonp(url).then success, fail
+    @auth = =>
+      console.log "Authenticating"
+      @promise = $http.jsonp url
+      @promise.then success, fail
+      @promise
 
     @

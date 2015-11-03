@@ -29,33 +29,48 @@ module.exports = (app) ->
         name: "page#{i}"
         url: "/page#{i}"
         templateProvider: ->
-          "You are at page #{i}"
+          "<div class=\"starter-template\">
+            <h1>Page #{i}</h1>
+            <p class=\"lead\">Content for this page</p>
+          </div>"
 
   # Generating special pages
 
   app.config ($stateProvider) ->
 
+    # Home page
+
+    $stateProvider.state
+      name: "home"
+      url: "/"
+      templateProvider: ->
+        "<div class=\"starter-template\">
+          <h1>Homepage</h1>
+          <p class=\"lead\">If you are lost - you belong here</p>
+        </div>"
+
     # Not Authroized
 
     $stateProvider.state
-      name: "NoAuth"
-      url: "/noath"
+      name: "noauth"
       template: require "jade!./templates/NoAuth.jade"
 
     # Waiting page
 
     $stateProvider.state
-      name: "Wait"
-      template: "Waiting for data from server"
-
-    # Starting page
-
-    $stateProvider.state
-      name: "Start"
-      template: "Starting page"
+      name: "wait"
+      templateProvider: ->
+        "<div class=\"starter-template\">
+          <h1>Waiting</h1>
+          <p class=\"lead\">Getting data from server</p>
+        </div>"
 
     # RedAlert page
 
     $stateProvider.state
-      name: "RedAlert"
-      template: "Critical Error. Game over"
+      name: "alert"
+      templateProvider: ->
+        "<div class=\"starter-template\">
+          <h1>Critical error</h1>
+          <p class=\"lead\">Game over</p>
+        </div>"
