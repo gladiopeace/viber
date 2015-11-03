@@ -1,0 +1,22 @@
+{
+  "name": "viber",
+  "version": "1.0.0",
+  "description": "Viber test job",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "angular": "^1.4.7",
+    "angular-ui-router": "^0.2.15",
+    "coffee-loader": "^0.7.2",
+    "coffee-script": "^1.10.0",
+    "html-loader": "^0.3.0",
+    "jade": "^1.11.0",
+    "jade-loader": "^0.7.1",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1"
+  }
+}
